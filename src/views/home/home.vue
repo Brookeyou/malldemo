@@ -8,20 +8,24 @@
     <div class="hSwiper">
       <home-swiper :banners="banners" ref="homeSwiper"></home-swiper>
     </div>
+    <div>
+      <home-recommend :recommends="recommends"></home-recommend>
+    </div>
   </div>
 </template>
 
 <script>
-import naviBar from 'components/common/navibar/naviBar'
-import {multiData} from 'network/home'
-import homeSwiper from 'views/home/childComp/homeSwiper'
+import naviBar from 'components/common/navibar/naviBar';
+import {multiData} from 'network/home';
+import homeSwiper from 'views/home/childComp/homeSwiper';
+import homeRecommend from 'views/home/childComp/homeRecommend';
 export default {
   name:'home',
   data() {
     return {
       naviTitle: '购物街',
       banners: null,
-      recommend: null,
+      recommends: null,
         };
     },
   created() {
@@ -29,7 +33,7 @@ export default {
       console.log(res);
       this.banners = res.data.data.banner.list;
       console.log(this.banners);
-      this.recommend = res.data.data.recommend.list;
+      this.recommends = res.data.data.recommend.list;
     })
     },
   mounted() {
@@ -46,7 +50,8 @@ export default {
     },
   components: {
     naviBar,
-    homeSwiper
+    homeSwiper,
+    homeRecommend
   }
 };
 </script>
@@ -61,7 +66,7 @@ export default {
   }
   .hSwiper {
     /* offsetWidth 取决于上级div 给定的长宽 */
-    margin: 2px 2px;
+    margin: 2px 2px 0px 2px;
   }
 
 </style>

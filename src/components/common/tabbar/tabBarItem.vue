@@ -69,6 +69,7 @@ export default {
     flex: 1;
     text-align: center;
     height: 49px;
+    line-height: 20px;
     font-size: 12px;
   }
 .tab-bar-item img {
@@ -76,7 +77,7 @@ export default {
   height: 18px;
   margin-top: 3px;
   /* 垂直对其方式 */
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
 </style>

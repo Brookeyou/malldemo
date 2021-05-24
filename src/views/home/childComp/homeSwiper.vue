@@ -1,6 +1,7 @@
 <template>
   <div>
     <swiper ref="swiper">
+      <!-- 层级逻辑更清晰，通过一个容器，套组件，再遍历数据插入多个item， item数据易获得 -->
       <swiper-item v-for="(item, index) in banners" :key="index">
         <a :href="item.link">
           <img :src="item.image">

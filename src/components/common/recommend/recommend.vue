@@ -1,12 +1,12 @@
 <template>
-  <div class="slide">
+  <div class="recommend">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name:'slide',
+  name:'recommend',
   data() {
     return {
 
@@ -25,12 +25,12 @@ export default {
 </script>
 
 <style scoped>
-.slide{
-  width: 100%;
-  flex-shrink: 0;
-}
-img {
-  width: 100%;
-  box-shadow: 2px 2px 1px rgba(100, 100, 100, 0.2);
+.recommend {
+  display: flex;
+  /* height: 100px; */
+  line-height: 35px;
+  text-align: center;
+  padding: 15px 0px 20px 0px;
+  border-bottom: 8px solid #eee;
 }
 </style>
