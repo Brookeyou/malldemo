@@ -69,15 +69,15 @@ export default {
     flex: 1;
     text-align: center;
     height: 49px;
-    line-height: 20px;
+    line-height: 15px;
     font-size: 12px;
   }
 .tab-bar-item img {
   width: 18px;
   height: 18px;
   margin-top: 3px;
-  /* 垂直对其方式 */
-  vertical-align: middle;
+  /* 垂直对齐方式 */
+  /* vertical-align: middle; */
 }
 
 </style>

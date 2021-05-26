@@ -66,6 +66,7 @@ export default {
       },
 
     checkPosition: function () {
+      // 使用延时是为了要等到动画过度完成，如果即时判断会导致动画还没有过度完成，立即跳转到判断的位置，导致动画消失
       setTimeout(() => {
 
         this.bannerStyle.transition = '0ms'
@@ -104,7 +105,7 @@ export default {
       }, this.interval);
     },
     stopTimer: function () {
-      clearInterval(this.timer);
+      window.clearInterval(this.timer);
     },
 
     // 按住屏幕时

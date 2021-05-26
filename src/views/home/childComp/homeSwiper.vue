@@ -35,7 +35,10 @@ export default {
     },
   methods: {
     startTimer: function () {
-      this.$refs.swiper.startTimer();
+      if (this.$refs.swiper){
+        this.$refs.swiper.startTimer();
+      }
+
     },
     stopTimer: function () {
       this.$refs.swiper.stopTimer();

@@ -34,11 +34,11 @@ img {
   /* height: 60px; */
   /* margin-bottom: 5px; */
   /* 垂直对其方式 */
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 .title {
   /* height: 40px; */
   font-size: 15px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 </style>

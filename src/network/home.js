@@ -6,3 +6,13 @@ export const multiData = () => {
     method: 'get'
   })
 }
+
+export const homeData = (type, page) => {
+  return request({
+    url: 'home/data',
+    params: {
+      type,
+      page
+    }
+  })
+}

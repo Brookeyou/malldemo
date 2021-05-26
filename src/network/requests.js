@@ -12,6 +12,4 @@ export const request = (config) => {
 
     });
     return instance1(config);
-
-
 }
