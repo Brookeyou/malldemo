@@ -42,6 +42,7 @@ export default {
 }
 .show-goods-item img {
   width: 100%;
+  border-radius: 2%;
 }
 .goods-info {
   /* 根据底部定位锁定块级位置不会根据图片大小变动 */

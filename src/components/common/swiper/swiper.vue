@@ -134,11 +134,12 @@ export default {
       let currentMove = Math.abs(this.distance);
       if (this.distance > 0 && currentMove > this.totalWidth * this.moveRatio){
         this.currentIndex--;
+        // this.changeItem()l; return;
       }else if (this.distance < 0 && currentMove > this.totalWidth * this.moveRatio){
         this.currentIndex++;
       }else if (this.distance === 0){
         this.startTimer();
-        return
+        return;
       }
       this.scrollContent(-this.currentIndex * this.totalWidth);
       this.startTimer();
