@@ -1,12 +1,15 @@
 <template>
-  <div class="show-goods-list">
-    <div class="goods-item" v-for="(item, index) in goodsList" :key="index">
-      <img :src="item.showLarge.img">
-    </div>
+  <div>
+    <grid-view>
+      <show-goods-item v-for="(item, index) in goodsList" :key="index" :goods="item"></show-goods-item>
+    </grid-view>
   </div>
 </template>
 
 <script>
+import gridView from 'components/common/gridview/gridView';
+import showGoodsItem from 'components/content/showgoodsview/showGoodsItem';
+
 export default {
   name:'showGoodsList',
   props: {
@@ -28,23 +31,15 @@ export default {
     },
   methods: {
 
-    }
+    },
+  components: {
+    gridView,
+    showGoodsItem
+  }
 };
 </script>
 
 <style scoped>
-.show-goods-list {
-  width: 100%;
-  line-height: 15px;
-}
-.goods-item {
-  display: inline-block;
-  /* float: left; */
-  width: 50%;
-  /* height: 240px; */
-}
-.goods-item img {
-  width: 100%;
-}
+
 
 </style>

@@ -85,7 +85,7 @@ export default {
         const goodsList = res.data.data.list;
         this.goodsList[type].list.push(...goodsList);
         this.goodsList[type].page += 1;
-        console.log(this.goodsList[type].list);
+        //console.log(this.goodsList[type].list);
         // console.log(this.goodsList[type].page);
       })
     }
@@ -133,5 +133,6 @@ export default {
     position: sticky;
     top: 44px;
     background-color: white;
+    z-index: 5;
   }
 </style>
