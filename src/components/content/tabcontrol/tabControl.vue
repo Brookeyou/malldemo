@@ -30,6 +30,7 @@ export default {
   methods: {
     tabClick (index) {
       this.currentIndex = index;
+      // 点击了哪个按钮传给父组件
       this.$emit('itemClick', index);
     }
 

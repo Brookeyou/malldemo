@@ -131,6 +131,7 @@ export default {
 
     // 滑动结束手指离开屏幕
     touchEnd: function (e) {
+      this.bannerStyle.transition = `transform ${this.animDuration}ms`;
       let currentMove = Math.abs(this.distance);
       if (this.distance > 0 && currentMove > this.totalWidth * this.moveRatio){
         this.currentIndex--;

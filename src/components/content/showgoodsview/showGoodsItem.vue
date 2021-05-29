@@ -1,6 +1,6 @@
 <template>
   <div class="show-goods-item">
-    <img :src="goods.showLarge.img" alt="">
+    <img :src="goods.showLarge.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goods.title}}</p>
       <span class="price">价格：￥{{goods.price}}</span>
@@ -27,10 +27,13 @@ export default {
 
     },
   mounted() {
-    console.log(this.goods);
+
     },
   methods: {
-
+    imageLoad () {
+      // 事件总线 需要在main vue prototype new vue
+      this.$bus.$emit('imageLoad');
+    }
     }
 };
 </script>
