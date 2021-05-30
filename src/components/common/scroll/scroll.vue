@@ -52,6 +52,7 @@ export default {
     },
 
     refresh () {
+      console.log('refresh')
       return this.scroll && this.scroll.refresh && this.scroll.refresh();
     },
     finishPullUp () {

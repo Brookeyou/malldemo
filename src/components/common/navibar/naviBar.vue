@@ -55,5 +55,6 @@ export default {
   }
   .mid {
     flex: 1;
+
   }
 </style>

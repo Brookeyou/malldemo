@@ -72,8 +72,11 @@ export default {
 
   },
   mounted() {
+    // this.$refs.scroll.refresh在赋值进方法时已经解析找到了相关的方法
+    const refresh = this.debounce(this.$refs.scroll.refresh, 500);
     this.$bus.$on('imageLoad', () => {
-      this.$refs.scroll.refresh();
+      //this.$refs.scroll.refresh();
+      refresh();
     })
     },
   activated () {
@@ -83,6 +86,30 @@ export default {
     //this.$refs.homeSwiper.stopTimer();
   },
   methods: {
+    debounce (func, time) {
+      let timer = null;
+      return (...args) => {
+        if (timer) {clearTimeout(timer)};
+        timer = setTimeout(() => {
+          // func.apply(this, args);
+          func(...args);
+        }, time);
+      }
+    },
+    debounceV2 (func, time) {
+      let timer = null;
+      return (...args) => {
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+          // console.log(this.$refs.scroll.refresh);
+          // console.log(func);
+          func(...args)
+        }, time);
+      }
+    },
+
     tabClick (index) {
       switch(index) {
         case 0:
