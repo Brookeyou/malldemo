@@ -23,6 +23,9 @@
     </scroll>
     <!-- <div class="fill">
     </div> -->
+    <load-more-ani v-show="isShowLoadAni">
+      <img src='~assets/img/common/loadmore.gif'>
+    </load-more-ani>
     <scroll-top v-show="showScrollTop" @backTop="backScroll">
       <img src="~assets/img/common/top.png" alt="">
     </scroll-top>
@@ -36,9 +39,10 @@ import homeSwiper from 'views/home/childComp/homeSwiper';
 import homeRecommend from 'views/home/childComp/homeRecommend';
 import featureView from 'views/home/childComp/featureView';
 import tabControl from 'components/content/tabcontrol/tabControl';
-import showGoodsList from 'views/home/childComp/showGoodsList'
-import scrollTop from 'components/common/scrolltop/scrollTop'
-import {POP, NEW, SELL} from '@/common/const'
+import showGoodsList from 'views/home/childComp/showGoodsList';
+import loadMoreAni from 'components/common/loadmoreani/loadMoreAni';
+import scrollTop from 'components/common/scrolltop/scrollTop';
+import {POP, NEW, SELL} from '@/common/const';
 import {multiData, homeData} from 'network/home';
 export default {
   name:'home',
@@ -56,7 +60,8 @@ export default {
       },
       tabControlOffsetTop: 0,
       showTabControl: false,
-      showScrollTop: false
+      showScrollTop: false,
+      isShowLoadAni: false,
         };
     },
   created() {
@@ -73,7 +78,7 @@ export default {
   },
   mounted() {
     // this.$refs.scroll.refresh在赋值进方法时已经解析找到了相关的方法
-    const refresh = this.debounce(this.$refs.scroll.refresh, 500);
+    const refresh = this.debounce(this.$refs.scroll.refresh, 1000);
     this.$bus.$on('imageLoad', () => {
       //this.$refs.scroll.refresh();
       refresh();
@@ -129,7 +134,11 @@ export default {
      },
 
      loadMore () {
+       this.isShowLoadAni = true;
        this.getHomeData(this.currentType);
+       setTimeout(() => {
+         this.isShowLoadAni = false;
+       }, 500)
      },
 
      backScroll () {
@@ -167,6 +176,7 @@ export default {
     featureView,
     tabControl,
     showGoodsList,
+    loadMoreAni,
     scrollTop
   }
 };
