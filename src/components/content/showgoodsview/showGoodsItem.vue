@@ -1,5 +1,5 @@
 <template>
-  <div class="show-goods-item">
+  <div class="show-goods-item" @click="itemClick(goods.iid)">
     <img :src="goods.showLarge.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goods.title}}</p>
@@ -33,6 +33,9 @@ export default {
     imageLoad () {
       // 事件总线 需要在main vue prototype new vue
       this.$bus.$emit('imageLoad');
+    },
+    itemClick (iid) {
+      this.$router.push({name: 'detail', query: {iid: iid}});
     }
     }
 };

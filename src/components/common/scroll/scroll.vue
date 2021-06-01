@@ -52,7 +52,7 @@ export default {
     },
 
     refresh () {
-      console.log('refresh')
+      console.log('refresh');
       return this.scroll && this.scroll.refresh && this.scroll.refresh();
     },
     finishPullUp () {
@@ -61,6 +61,10 @@ export default {
 
     backTop (x, y, time) {
       return this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time);
+    },
+
+    getScrollY () {
+      return this.scroll? this.scroll.y : 0;
     }
     },
     watch: {

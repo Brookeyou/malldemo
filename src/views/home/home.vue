@@ -62,6 +62,7 @@ export default {
       showTabControl: false,
       showScrollTop: false,
       isShowLoadAni: false,
+      saveScrollPosition: 0,
         };
     },
   created() {
@@ -86,9 +87,12 @@ export default {
     },
   activated () {
     //this.$refs.homeSwiper.startTimer();
+    this.$refs.scroll.backTop(0, this.saveScrollPosition, 0);
+    this.$refs.scroll.refresh();
   },
   deactivated () {
     //this.$refs.homeSwiper.stopTimer();
+    this.saveScrollPosition = this.$refs.scroll.getScrollY();
   },
   methods: {
     debounce (func, time) {
