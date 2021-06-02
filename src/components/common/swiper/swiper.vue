@@ -19,18 +19,18 @@ export default {
 		    type: Number,
         default: 3000
       },
-      animDuration: {
-		    type: Number,
-        default: 1000
-      },
-      moveRatio: {
-        type: Number,
-        default: 0.25
-      },
-      showIndicator: {
-        type: Boolean,
-        default: true
-      },
+    animDuration: {
+      type: Number,
+      default: 1000
+    },
+    moveRatio: {
+      type: Number,
+      default: 0.25
+    },
+    showIndicator: {
+      type: Boolean,
+      default: true
+    },
   },
   data() {
     return {

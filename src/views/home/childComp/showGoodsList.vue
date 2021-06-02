@@ -15,7 +15,9 @@ export default {
   props: {
     goodsList: {
       type: Array,
-      default: []
+      default() {
+        return []
+      }
     }
   },
   data() {
