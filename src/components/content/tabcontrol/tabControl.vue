@@ -14,6 +14,10 @@ export default {
     titles: {
       type: Array,
       default: []
+    },
+    changeIndex: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -34,7 +38,12 @@ export default {
       this.$emit('itemClick', index);
     }
 
+    },
+  watch: {
+    changeIndex(newVal, oldVal) {
+      this.currentIndex = newVal;
     }
+  }
 };
 </script>
 

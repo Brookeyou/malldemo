@@ -20,3 +20,14 @@ export class BaseGoodsInfo {
     this.services = services
   }
 }
+
+export class ShopInfo {
+  constructor(shopInfo) {
+    this.shopLogo = shopInfo.shopLogo;
+    this.shopName = shopInfo.name;
+    this.totalSell = shopInfo.cSells;
+    this.totalGoods = shopInfo.cGoods;
+    this.score = shopInfo.score;
+    this.shopUrl = shopInfo.shopUrl
+  }
+}

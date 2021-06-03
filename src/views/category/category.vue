@@ -1,4 +1,5 @@
 <template>
+<div id="category">
   <div class="wrapper">
     <ul id="second">
       <li>分类1</li>
@@ -103,6 +104,8 @@
       <li>分类100</li>
     </ul>
   </div>
+</div>
+
 </template>
 
 <script>
@@ -121,6 +124,9 @@ export default {
   updated () {
 
   },
+  activated() {
+    // console.log(document.getElementsByTagName('body')[0].scrollHeight);
+  },
   mounted() {
     // this.getOffset();
     let wrapper = document.querySelector('.wrapper');
@@ -138,9 +144,19 @@ export default {
 </script>
 
 <style scoped>
+#category {
+  position: relative;
+  height: 100vh;
+}
 .wrapper {
-  height: 300px;
+  /* position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 20px; */
   background-color: chocolate;
+  height: calc(100% - 50px);
+  margin-top: 50px;
   /* overflow: scroll; */
   /* overflow: hidden;
   overflow-y: scroll; */

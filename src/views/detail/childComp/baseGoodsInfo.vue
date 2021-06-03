@@ -102,13 +102,15 @@ export default {
 }
 .services {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px);
-  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 33.33%);
+  /* justify-content: space-between;
+  justify-items: center; */
 }
 .services .services-item {
   display: inline-block;
   line-height: 20px;
   font-size: 10px;
+  text-align: center;
 }
 .services .services-item img {
   display: inline-block;

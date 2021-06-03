@@ -3,7 +3,8 @@
     <navi-bar class="navi-bar">
       <div slot="mid">{{naviTitle}}</div>
     </navi-bar>
-    <tab-control v-show="showTabControl" :titles="titles" @itemClick="tabClick" class="tab-control-top"></tab-control>
+    <tab-control v-show="showTabControl" :titles="titles" @itemClick="tabClick"
+    :changeIndex="changeIndex" class="tab-control-top"></tab-control>
     <!-- <div style="float:left; width:300px">1</div> -->
     <!-- <div class="hSwiper" style="float:left; width:200px;"> offsetwidth根据div大小确定-->
     <scroll @scrollEvent='scrollShow'
@@ -17,7 +18,8 @@
         </div>
         <home-recommend :recommends="recommends"></home-recommend>
         <feature-view></feature-view>
-        <tab-control :titles="titles" @itemClick="tabClick" class="tab-control-pos" ref="tabControl"></tab-control>
+        <tab-control :titles="titles" @itemClick="tabClick" class="tab-control-pos"
+        :changeIndex="changeIndex" ref="tabControl"></tab-control>
         <show-goods-list :goodsList="showGoodsList"></show-goods-list>
       </div>
     </scroll>
@@ -53,6 +55,7 @@ export default {
       recommends: null,
       titles: ['流行', '新款', '精选'],
       currentType: POP,
+      changeIndex: 0,
       goodsList: {
         'pop': {page: 1, list:[]},
         'new': {page: 1, list:[]},
@@ -120,6 +123,7 @@ export default {
     },
 
     tabClick (index) {
+      this.changeIndex = index;
       switch(index) {
         case 0:
           this.currentType = POP;
@@ -190,7 +194,7 @@ export default {
  <style scoped>
   #home {
     /* 影响子元素sticky */
-    /* height: 100vh; */
+    height: 100vh;
     padding-top: 44px;
   }
   .navi-bar {
