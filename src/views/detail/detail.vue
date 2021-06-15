@@ -1,11 +1,12 @@
 <template>
   <div id="detail">
     <detail-navi-bar class="navi-bar"></detail-navi-bar>
-    <scroll>
+    <scroll ref="scroll">
       <div>
         <detail-swiper :swiperImages="swiperImages"></detail-swiper>
         <base-goods-info :baseGoodsInfos="baseGoods"></base-goods-info>
         <shop-info :shopInfo="shopInfo"></shop-info>
+        <detail-info :detailInfo="detailInfo" @detailImageLoad="detailImageRefresh"></detail-info>
       </div>
     </scroll>
 
@@ -18,7 +19,9 @@ import scroll from 'components/common/scroll/scroll';
 import detailSwiper from 'views/detail/childComp/detailSwiper';
 import baseGoodsInfo from 'views/detail/childComp/baseGoodsInfo';
 import shopInfo from 'views/detail/childComp/shopInfo';
+import detailInfo from 'views/detail/childComp/detailInfo';
 import {detailData, BaseGoodsInfo, ShopInfo} from 'network/detail';
+
 export default {
   name:'detail',
   data() {
@@ -26,7 +29,8 @@ export default {
       iid: null,
       swiperImages: [],
       baseGoods: {},
-      shopInfo: {}
+      shopInfo: {},
+      detailInfo: {}
         };
     },
   created() {
@@ -63,8 +67,12 @@ export default {
           res.data.result.shopInfo.services
         );
         this.shopInfo = new ShopInfo(res.data.result.shopInfo);
-        // console.log(this.shopInfo);
+        this.detailInfo = res.data.result.detailInfo;
       })
+    },
+
+    detailImageRefresh() {
+      this.$refs.scroll.refresh();
     }
     },
   components: {
@@ -72,7 +80,8 @@ export default {
     scroll,
     detailSwiper,
     baseGoodsInfo,
-    shopInfo
+    shopInfo,
+    detailInfo
   }
 };
 </script>

@@ -11,7 +11,7 @@
       <div class="old-price">
         {{baseGoodsInfos.oldPrice}}
       </div>
-      <div class="discount-type" :style="{'background-color': baseGoodsInfos.discountBgColor}">
+      <div v-if="baseGoodsInfos.discountDesc !== ''" class="discount-type" :style="{'background-color': baseGoodsInfos.discountBgColor}">
         {{baseGoodsInfos.discountDesc}}
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
 
     },
   mounted() {
-
+    
     },
   methods: {
 

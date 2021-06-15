@@ -18,7 +18,7 @@ export default {
   name: 'mainTabBar',
   data () {
     return {
-      // srcDe应用了别名，模板直接使用要加~
+      // srcDe应用了别名，模板直接使用要加~  接收别名和相对路径
       tabBarData: [
         {name: '首页', color: 'deeppink', path: '/home', srcDe: require('assets/img/tabbar/home-deactivate.svg'), src: require('assets/img/tabbar/home-activate.svg')},
         {name: '分类', color: 'deeppink', path: '/category', srcDe: require('assets/img/tabbar/category-deactivate.svg'), src: require('assets/img/tabbar/category-activate.svg')},

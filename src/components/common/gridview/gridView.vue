@@ -47,6 +47,7 @@ export default {
   methods: {
     // 自动化布局
     _autoLayout () {
+      // 获取DOM元素 ref加载普通标签的应用场景
       let grid = this.$refs.gridView;
       // 所有二级子元素
       let children = grid.children;
