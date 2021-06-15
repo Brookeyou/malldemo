@@ -39,7 +39,8 @@ export default {
     imageLoad() {
       this.counter++;
       if (this.counter === this.imageLength) {
-        this.$emit('detailImageLoad');
+        // this.$emit('detailImageLoad');
+        this.$bus.$emit('detailImageLoad');
       }
     }
 

@@ -45,6 +45,13 @@ export default {
   },
   mounted() {
 
+    this.$bus.$on('detailImageLoad', () => {
+      try {
+        this.$refs.scroll.refresh();
+      } catch (error) {
+        
+      }
+    })
     },
   methods: {
     getDetail (iid) {
