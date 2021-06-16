@@ -23,8 +23,6 @@
         <show-goods-list :goodsList="showGoodsList"></show-goods-list>
       </div>
     </scroll>
-    <!-- <div class="fill">
-    </div> -->
     <load-more-ani v-show="isShowLoadAni">
       <img src='~assets/img/common/loadmore.gif'>
     </load-more-ani>
@@ -70,15 +68,12 @@ export default {
     },
   created() {
     multiData().then((res) => {
-      // console.log(res);
       this.banners = res.data.data.banner.list;
-      // console.log(this.banners);
       this.recommends = res.data.data.recommend.list;
     });
     this.getHomeData(POP);
     this.getHomeData(NEW);
     this.getHomeData(SELL);
-
   },
   mounted() {
     // this.$refs.scroll.refresh在赋值进方法时已经解析找到了相关的方法
@@ -162,9 +157,7 @@ export default {
         //console.log(this.goodsList[type].list);
         // console.log(this.goodsList[type].page);
         this.tabControlOffsetTop = this.$refs.tabControl.$el.offsetTop;
-        // console.log(this.tabControlOffsetTop);
         this.$refs.scroll.finishPullUp();
-
       })
     }
     },

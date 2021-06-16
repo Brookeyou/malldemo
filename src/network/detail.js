@@ -1,5 +1,7 @@
 import {request} from 'network/requests'
 
+const handlerTable = Symbol('handlerTable');
+
 export const detailData = (iid) => {
   return request ({
     url: '/detail',
@@ -29,5 +31,29 @@ export class ShopInfo {
     this.totalGoods = shopInfo.cGoods;
     this.score = shopInfo.score;
     this.shopUrl = shopInfo.shopUrl
+  }
+}
+
+export class ItemParams {
+  constructor(itemParams) {
+    this.itemParams = itemParams;
+    this.set = itemParams.info.set;
+    this.setName = itemParams.info.key;
+    this.table = this[handlerTable]();
+    this.tableName = itemParams.rule.key;
+    this.disclaimer = itemParams.rule.disclaimer;
+  };
+  [handlerTable]() {
+    let tables = this.itemParams.rule.tables;
+    if (tables.length > 1) {
+      for (let i = 1; i <= tables.length -1; i++) {
+        for (let j = 0; j <= tables[i].length - 1; j++) {
+          tables[i][j].shift();
+          tables[0][j].push(...tables[i][j]);
+        }
+      }
+    }
+    tables.splice(1, tables.length - 1);
+    return tables
   }
 }

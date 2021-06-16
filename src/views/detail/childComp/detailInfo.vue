@@ -92,6 +92,7 @@ export default {
   margin: 10px;
   padding: 0px 15px;
   font-size: 15px;
+  text-align: center;
 }
 .info-image-list img {
   width: 100%;

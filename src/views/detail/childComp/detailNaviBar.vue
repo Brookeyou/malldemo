@@ -18,6 +18,12 @@
 import naviBar from 'components/common/navibar/naviBar'
 export default {
   name:'detailNaviBar',
+  props: {
+    scrollCurrentIndex: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
       naviBarTitle: ['商品', '参数', '评论', '推荐'],
@@ -30,16 +36,28 @@ export default {
   mounted() {
 
     },
+  updated() {
+
+  },
   methods: {
     backClick () {
       this.$router.back();
     },
     itemClick (index) {
       this.currentIndex = index;
-      console.log(this.currentIndex);
+      this.$emit('naviBarIndex', index)
     }
 
     },
+  watch: {
+    scrollCurrentIndex: {
+      immediate: true,
+      handler(val) {
+        this.currentIndex = val;
+      }
+    }
+  },
+
   components: {
     naviBar
   }

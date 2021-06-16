@@ -33,7 +33,7 @@ export default {
   right: 10px;
   width: 43px;
   height: 43px;
-  z-index: 6;
+  z-index: 12;
 }
 .scroll-top img {
   width: 100%;

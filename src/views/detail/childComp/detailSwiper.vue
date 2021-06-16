@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .h-swiper {
-  margin: 2px 2px 0px 2px;
+  margin: 2px 2px 6px 2px;
 }
 .item {
   text-align: center;
