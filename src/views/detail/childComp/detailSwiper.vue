@@ -38,6 +38,9 @@ export default {
   computed: {
 
   },
+  watch: {
+
+  },
   components: {
     swiper,
     swiperItem

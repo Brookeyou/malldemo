@@ -6,6 +6,14 @@ const shopCart = () => import('views/shopcart/shopCart.vue');
 const profile = () => import('views/profile/profile.vue');
 const detail = () => import('views/detail/detail.vue');
 
+
+
+// const originalPush = Router.prototype.push;
+// //修改原型对象中的push方法
+// Router.prototype.push= function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// };
+
 Vue.use(Router)
 
 const router =  new Router({

@@ -1,6 +1,6 @@
 <template>
-  <div class="show-goods-item" @click="itemClick(goods.iid)">
-    <img :src="goods.showLarge.img" alt="" @load="imageLoad">
+  <div class="show-goods-item" @click="itemClick(goods.iid || goods.item_id)">
+    <img :src="showImg" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goods.title}}</p>
       <span class="price">价格：￥{{goods.price}}</span>
@@ -35,9 +35,14 @@ export default {
       this.$bus.$emit('imageLoad');
     },
     itemClick (iid) {
-      this.$router.push({name: 'detail', query: {iid: iid}});
+      this.$router.push({name: 'detail', query: {iid: iid}}).catch(err => err);
     }
+    },
+  computed: {
+    showImg() {
+      return this.goods.showLarge !== undefined? this.goods.showLarge.img : this.goods.image;
     }
+  }
 };
 </script>
 

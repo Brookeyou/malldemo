@@ -42,6 +42,9 @@ export default {
       timer: null,
         };
     },
+  updated() {
+
+  },
   mounted() {
     // 等数据传输
     setTimeout(() => {

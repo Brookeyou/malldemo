@@ -6,7 +6,7 @@
       </div>
       <div slot="mid" class="navi-title-box">
         <div v-for="(item, index) in naviBarTitle" :key="index" class="navi-title"
-        :class="{active: index === currentIndex}" @click="itemClick(index)">
+        :class="{active: index === scrollCurrentIndex}" @click="itemClick(index)">
           {{item}}
         </div>
       </div>
@@ -44,18 +44,18 @@ export default {
       this.$router.back();
     },
     itemClick (index) {
-      this.currentIndex = index;
+      // this.currentIndex = index;
       this.$emit('naviBarIndex', index)
     }
 
     },
   watch: {
-    scrollCurrentIndex: {
-      immediate: true,
-      handler(val) {
-        this.currentIndex = val;
-      }
-    }
+    // scrollCurrentIndex: {
+    //   immediate: true,
+    //   handler(val) {
+    //     this.currentIndex = val;
+    //   }
+    // }
   },
 
   components: {

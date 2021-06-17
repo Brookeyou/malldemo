@@ -13,6 +13,7 @@
         {{item.content}}
       </div>
       <div class="sku-info">
+        {{item.created | handlerDate}}
         {{item.style}}
       </div>
       <div class="user-images" v-if="item.images !== undefined">
@@ -25,6 +26,8 @@
 </template>
 
 <script>
+import {formatDate} from 'common/utils'
+
 export default {
   name:'userComment',
   props: {
@@ -48,11 +51,21 @@ export default {
     },
   methods: {
 
+    },
+  filters: {
+    handlerDate(value) {
+      let date = new Date(value * 1000);
+      return formatDate(date, 'yyyy-MM-dd');
     }
+  }
 };
 </script>
 
 <style scoped>
+.user-comment {
+  padding: 0 0 5px 0;
+  border-bottom: 5px solid #eee;
+}
 .theme {
   padding: 10px 0;
   margin: 0 10px;

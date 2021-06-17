@@ -1,6 +1,6 @@
 <template>
-  <div id="detail">
-    <detail-navi-bar class="navi-bar" @naviBarIndex="detailScrollTo"
+  <div id="detail"  :key="refreshIndex">
+    <detail-navi-bar class="detail-navi-bar" @naviBarIndex="detailScrollTo"
                      :scrollCurrentIndex="scrollIndex"></detail-navi-bar>
     <scroll ref="scroll"
             @scrollEvent="showScroll">
@@ -10,7 +10,8 @@
         <shop-info :shopInfo="shopInfo"></shop-info>
         <detail-info :detailInfo="detailInfo" @detailImageLoad="detailImageRefresh"></detail-info>
         <item-params :itemParams="itemParams" ref="itemParams"></item-params>
-        <user-comment :userComment="userComment"></user-comment>
+        <user-comment :userComment="userComment" ref="userComment"></user-comment>
+        <recommend-goods :recommendGoods="recommendGoods" ref="recommendGoods"></recommend-goods>
       </div>
     </scroll>
     <scroll-top v-show="showScrollTop" @backTop="backScroll">
@@ -29,11 +30,14 @@ import detailInfo from 'views/detail/childComp/detailInfo';
 import itemParams from 'views/detail/childComp/itemParams';
 import scrollTop from 'components/common/scrolltop/scrollTop';
 import userComment from 'views/detail/childComp/userComment';
-import {detailData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
+import recommendGoods from 'views/detail/childComp/recommendGoods'
+import {imageLoadListener} from 'common/mixin';
+import {detailData, recommendData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
 import {BACKTOP_DISTANCE} from 'common/const';
 
 export default {
   name:'detail',
+  mixins: [imageLoadListener],
   data() {
     return {
       iid: null,
@@ -43,24 +47,30 @@ export default {
       detailInfo: {},
       itemParams: {},
       userComment: {},
+      recommendGoods: [],
       showScrollTop: false,
       goodsOffsetTop: 0,
       paramsOffsetTop: 0,
-      scrollIndex: 0
+      userCommentOffsetTop: 0,
+      recommendGoodsOffsetTop: 0,
+      scrollIndex: 0,
+      refreshIndex: false,
         };
     },
   created() {
     this.iid = this.$route.query.iid;
     this.getDetail(this.iid);
+    this.getRecommendData();
     },
   updated() {
+    this.iid = this.$route.query.iid;
+    this.getDetail(this.iid);
     this.getOffsetTop();
   },
-  activated () {
-
+  destroyed() {
+    this.$bus.$off('imageLoad', this.imageLoadListenerFunc)
   },
   mounted() {
-
     this.$bus.$on('detailImageLoad', () => {
       try {
         this.$refs.scroll.refresh();
@@ -96,6 +106,12 @@ export default {
       })
     },
 
+    getRecommendData() {
+      recommendData().then((res) => {
+        this.recommendGoods = res.data.data.list;
+      })
+    },
+
     detailImageRefresh() {
       this.$refs.scroll.refresh();
       },
@@ -113,13 +129,19 @@ export default {
     getOffsetTop() {
       this.goodsOffsetTop = this.$refs.detailSwiper.$el.offsetTop;
       this.paramsOffsetTop = this.$refs.itemParams.$el.offsetTop;
+      this.userCommentOffsetTop = this.$refs.userComment.$el.offsetTop;
+      this.recommendGoodsOffsetTop = this.$refs.recommendGoods.$el.offsetTop;
     },
 
     getScrollIndex(y) {
       if (y <= -this.goodsOffsetTop && y > -this.paramsOffsetTop) {
         this.scrollIndex = 0;
-      }else if (y <= -this.paramsOffsetTop) {
+      }else if (y <= -this.paramsOffsetTop && y > -this.userCommentOffsetTop) {
         this.scrollIndex = 1;
+      }else if (y <= -this.userCommentOffsetTop && y > -this.recommendGoodsOffsetTop) {
+        this.scrollIndex = 2;
+      }else if (y <= -this.recommendGoodsOffsetTop) {
+        this.scrollIndex = 3;
       }
     },
 
@@ -139,10 +161,27 @@ export default {
             this.showScrollTop = true;
           }
           break;
+        case 2:
+          this.$refs.scroll.backTop(0, -this.userCommentOffsetTop, 200);
+          if (-this.userCommentOffsetTop < -BACKTOP_DISTANCE) {
+            this.showScrollTop = true;
+          }
+          break;
+        case 3:
+          this.$refs.scroll.backTop(0, -this.recommendGoodsOffsetTop, 200);
+          if (-this.userCommentOffsetTop < -BACKTOP_DISTANCE) {
+            this.showScrollTop = true;
+          }
       }
 
     }
     },
+  watch: {
+    $route(newVal, oldVal) {
+      this.refreshIndex = !this.refreshIndex;
+      this.scrollIndex = 0;
+    }
+  },
   components: {
     detailNaviBar,
     scroll,
@@ -152,6 +191,7 @@ export default {
     detailInfo,
     itemParams,
     userComment,
+    recommendGoods,
     scrollTop
   }
 };
@@ -163,7 +203,7 @@ export default {
   padding-bottom: 50px;
   height: 100vh;
 }
-.navi-bar {
+.detail-navi-bar {
   background-color: white;
   position: fixed;
   left: 0px;

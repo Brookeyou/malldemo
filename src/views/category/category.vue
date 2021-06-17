@@ -145,18 +145,19 @@ export default {
 
 <style scoped>
 #category {
-  position: relative;
+  /* position: relative; */
   height: 100vh;
 }
 .wrapper {
-  /* position: absolute;
-  top: 20px;
+  position: absolute;
+  top: 100px;
   left: 0;
   right: 0;
-  bottom: 20px; */
+  bottom: 0px;
+  /* height: 50vh; */
   background-color: chocolate;
-  height: calc(100% - 50px);
-  margin-top: 50px;
+  /* height: calc(100% - 50px);
+  margin-top: 50px; */
   /* overflow: scroll; */
   /* overflow: hidden;
   overflow-y: scroll; */

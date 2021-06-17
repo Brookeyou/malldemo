@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-view>
-      <show-goods-item v-for="(item, index) in goodsList" :key="index" :goods="item"></show-goods-item>
+      <show-goods-item v-for="(item, index) in recommendGoods" :key="index" :goods="item"></show-goods-item>
     </grid-view>
   </div>
 </template>
@@ -11,9 +11,9 @@ import gridView from 'components/common/gridview/gridView';
 import showGoodsItem from 'components/content/showgoodsview/showGoodsItem';
 
 export default {
-  name:'showGoodsList',
+  name:'recommendGoods',
   props: {
-    goodsList: {
+    recommendGoods: {
       type: Array,
       default() {
         return [];
@@ -42,6 +42,5 @@ export default {
 </script>
 
 <style scoped>
-
 
 </style>

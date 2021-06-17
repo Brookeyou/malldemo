@@ -3,11 +3,17 @@ import {request} from 'network/requests'
 const handlerTable = Symbol('handlerTable');
 
 export const detailData = (iid) => {
-  return request ({
+  return request({
     url: '/detail',
     params: {
       iid
     }
+  })
+}
+
+export const recommendData = () => {
+  return request({
+    url: '/recommend'
   })
 }
 

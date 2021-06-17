@@ -42,10 +42,13 @@ import tabControl from 'components/content/tabcontrol/tabControl';
 import showGoodsList from 'views/home/childComp/showGoodsList';
 import loadMoreAni from 'components/common/loadmoreani/loadMoreAni';
 import scrollTop from 'components/common/scrolltop/scrollTop';
-import {POP, NEW, SELL} from '@/common/const';
+import {POP, NEW, SELL} from 'common/const';
+import {imageLoadListener} from 'common/mixin';
 import {multiData, homeData} from 'network/home';
+
 export default {
   name:'home',
+  mixins: [imageLoadListener],
   data() {
     return {
       naviTitle: '购物街',
@@ -76,12 +79,7 @@ export default {
     this.getHomeData(SELL);
   },
   mounted() {
-    // this.$refs.scroll.refresh在赋值进方法时已经解析找到了相关的方法
-    const refresh = this.debounce(this.$refs.scroll.refresh, 1000);
-    this.$bus.$on('imageLoad', () => {
-      //this.$refs.scroll.refresh();
-      refresh();
-    })
+
     },
   activated () {
     //this.$refs.homeSwiper.startTimer();
@@ -91,32 +89,9 @@ export default {
   deactivated () {
     //this.$refs.homeSwiper.stopTimer();
     this.saveScrollPosition = this.$refs.scroll.getScrollY();
+    this.$bus.$off('imageLoad', this.imageLoadListenerFunc)
   },
   methods: {
-    debounce (func, time) {
-      let timer = null;
-      return (...args) => {
-        if (timer) {clearTimeout(timer)};
-        timer = setTimeout(() => {
-          // func.apply(this, args);
-          func(...args);
-        }, time);
-      }
-    },
-    debounceV2 (func, time) {
-      let timer = null;
-      return (...args) => {
-        if (timer) {
-          clearTimeout(timer);
-        }
-        timer = setTimeout(function () {
-          // console.log(this.$refs.scroll.refresh);
-          // console.log(func);
-          func(...args)
-        }, time);
-      }
-    },
-
     tabClick (index) {
       this.changeIndex = index;
       switch(index) {
