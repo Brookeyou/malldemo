@@ -17,6 +17,7 @@
     <scroll-top v-show="showScrollTop" @backTop="backScroll">
       <img src="~assets/img/common/top.png" alt="">
     </scroll-top>
+    <detail-bottom-bar></detail-bottom-bar>
   </div>
 </template>
 
@@ -30,7 +31,8 @@ import detailInfo from 'views/detail/childComp/detailInfo';
 import itemParams from 'views/detail/childComp/itemParams';
 import scrollTop from 'components/common/scrolltop/scrollTop';
 import userComment from 'views/detail/childComp/userComment';
-import recommendGoods from 'views/detail/childComp/recommendGoods'
+import recommendGoods from 'views/detail/childComp/recommendGoods';
+import detailBottomBar from 'views/detail/childComp/detailBottomBar';
 import {imageLoadListener} from 'common/mixin';
 import {detailData, recommendData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
 import {BACKTOP_DISTANCE} from 'common/const';
@@ -192,7 +194,8 @@ export default {
     itemParams,
     userComment,
     recommendGoods,
-    scrollTop
+    scrollTop,
+    detailBottomBar
   }
 };
 </script>
