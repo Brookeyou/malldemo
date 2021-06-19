@@ -5,17 +5,17 @@
         <div class="icon"></div>
         <div class="text">客服</div>
       </div>
-        <div class="shop">
+      <div class="shop">
         <div class="icon"></div>
         <div class="text"> 店铺</div>
       </div>
-        <div class="collection">
-        <div class="icon"></div>
+      <div class="collection" @click="collect">
+        <div class="icon" :class="{collected: isCollection}"></div>
         <div class="text">收藏</div>
       </div>
     </div>
     <div class="item-right">
-      <div class="shopcart">加入购物车</div>
+      <div class="shopcart" @click="addToShopcart">加入购物车</div>
       <div class="purchase">购买</div>
     </div>
   </div>
@@ -26,8 +26,8 @@ export default {
   name:'detailBottomBar',
   data() {
     return {
-
-        };
+      isCollection: false
+      };
     },
   created() {
 
@@ -36,7 +36,12 @@ export default {
 
     },
   methods: {
-
+      collect() {
+          this.isCollection = !this.isCollection;
+      },
+      addToShopcart() {
+        this.$emit('addToShopcart');
+      }
     }
 };
 </script>
@@ -100,5 +105,8 @@ export default {
 }
 .collection .icon {
   background-position: 0 2px;
+}
+.collected.icon {
+  background-position: 0 -25px;
 }
 </style>

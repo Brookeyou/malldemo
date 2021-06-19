@@ -17,7 +17,8 @@
     <scroll-top v-show="showScrollTop" @backTop="backScroll">
       <img src="~assets/img/common/top.png" alt="">
     </scroll-top>
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addToShopcart="addToShopcart"></detail-bottom-bar>
+    <add-shopcart-text v-show="isAddShopcartText"></add-shopcart-text>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import scrollTop from 'components/common/scrolltop/scrollTop';
 import userComment from 'views/detail/childComp/userComment';
 import recommendGoods from 'views/detail/childComp/recommendGoods';
 import detailBottomBar from 'views/detail/childComp/detailBottomBar';
+import addShopcartText from 'views/detail/childComp/addShopcartText';
 import {imageLoadListener} from 'common/mixin';
 import {detailData, recommendData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
 import {BACKTOP_DISTANCE} from 'common/const';
@@ -57,6 +59,7 @@ export default {
       recommendGoodsOffsetTop: 0,
       scrollIndex: 0,
       refreshIndex: false,
+      isAddShopcartText: false
         };
     },
   created() {
@@ -175,7 +178,21 @@ export default {
             this.showScrollTop = true;
           }
       }
-
+    },
+    showAddShopcartText() {
+      this.isAddShopcartText = true;
+      setTimeout(() => {
+        this.isAddShopcartText = false;
+      }, 2000);
+    },
+    addToShopcart() {
+      const obj = {};
+      obj.image = this.swiperImages[0];
+      obj.title = this.baseGoods.title;
+      obj.price = this.baseGoods.price;
+      obj.quantity = 1;
+      console.log(obj);
+      this.showAddShopcartText();
     }
     },
   watch: {
@@ -195,6 +212,7 @@ export default {
     userComment,
     recommendGoods,
     scrollTop,
+    addShopcartText,
     detailBottomBar
   }
 };

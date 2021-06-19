@@ -6,7 +6,7 @@
 
     <div class="goods-price">
       <div class="new-price">
-        {{baseGoodsInfos.price}}
+        ￥{{baseGoodsInfos.price}}
       </div>
       <div class="old-price">
         {{baseGoodsInfos.oldPrice}}
@@ -49,7 +49,7 @@ export default {
 
     },
   mounted() {
-    
+
     },
   methods: {
 

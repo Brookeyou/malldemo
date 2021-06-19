@@ -20,8 +20,8 @@ export const recommendData = () => {
 export class BaseGoodsInfo {
   constructor(itemInfo, columns, services) {
     this.title = itemInfo.title;
-    this.price = itemInfo.price;
-    this.oldPrice = itemInfo.oldPrice;
+    this.price = itemInfo.lowPrice;
+    this.oldPrice = itemInfo.highPrice;
     this.discountDesc = itemInfo.discountDesc;
     this.discountBgColor = itemInfo.discountBgColor;
     this.columns = columns;
