@@ -20,4 +20,8 @@ export default {
 
 <style>
   @import 'assets/css/base.css';
+  body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 </style>

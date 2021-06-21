@@ -18,7 +18,10 @@
       <img src="~assets/img/common/top.png" alt="">
     </scroll-top>
     <detail-bottom-bar @addToShopcart="addToShopcart"></detail-bottom-bar>
-    <add-shopcart-text v-show="isAddShopcartText"></add-shopcart-text>
+    <detail-modal-tab :skuInfo="skuInfo" ref="modalTab"></detail-modal-tab>
+    <add-shopcart-text v-show="isAddShopcartText"
+                         :text="addShopcartToast">
+    </add-shopcart-text>
   </div>
 </template>
 
@@ -35,6 +38,8 @@ import userComment from 'views/detail/childComp/userComment';
 import recommendGoods from 'views/detail/childComp/recommendGoods';
 import detailBottomBar from 'views/detail/childComp/detailBottomBar';
 import addShopcartText from 'views/detail/childComp/addShopcartText';
+import detailModalTab from 'views/detail/childComp/detailModalTab';
+// import modalTab from 'components/common/skumodal/modalTab'
 import {imageLoadListener} from 'common/mixin';
 import {detailData, recommendData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
 import {BACKTOP_DISTANCE} from 'common/const';
@@ -52,6 +57,7 @@ export default {
       itemParams: {},
       userComment: {},
       recommendGoods: [],
+      skuInfo: {},
       showScrollTop: false,
       goodsOffsetTop: 0,
       paramsOffsetTop: 0,
@@ -59,17 +65,19 @@ export default {
       recommendGoodsOffsetTop: 0,
       scrollIndex: 0,
       refreshIndex: false,
-      isAddShopcartText: false
+      isAddShopcartText: false,
+      addShopcartToast: '商品已加入购物车',
+      updateNetDebounce: null
         };
     },
   created() {
-    this.iid = this.$route.query.iid;
-    this.getDetail(this.iid);
-    this.getRecommendData();
+    this.getNetworkData();
+    this.updateNetDebounce = this.updateDebounce(this.getRecommendData, 1000);
     },
   updated() {
-    this.iid = this.$route.query.iid;
-    this.getDetail(this.iid);
+    // this.iid = this.$route.query.iid;
+    // this.getDetail(this.iid);
+    // this.updateNetDebounce();
     this.getOffsetTop();
   },
   destroyed() {
@@ -88,17 +96,6 @@ export default {
     getDetail (iid) {
       detailData (iid).then((res) => {
         this.swiperImages = res.data.result.itemInfo.topImages;
-        // this.baseGoods = {
-        //   title: res.data.result.itemInfo.title,
-        //   price: res.data.result.itemInfo.price,
-        //   oldPrice: res.data.result.itemInfo.oldPrice,
-        //   discountType: {
-        //     discountDesc: res.data.result.itemInfo.discountDesc,
-        //     discountBgColor: res.data.result.itemInfo.discountBgColor
-        //   },
-        //   columns: res.data.result.columns,
-        //   services: res.data.result.shopInfo.services
-        // };
         this.baseGoods = new BaseGoodsInfo(
           res.data.result.itemInfo,
           res.data.result.columns,
@@ -108,6 +105,8 @@ export default {
         this.detailInfo = res.data.result.detailInfo;
         this.itemParams = new ItemParams(res.data.result.itemParams);
         this.userComment = res.data.result.rate;
+        this.skuInfo = res.data.result.skuInfo;
+        console.log(this.skuInfo);
       })
     },
 
@@ -116,7 +115,11 @@ export default {
         this.recommendGoods = res.data.data.list;
       })
     },
-
+    getNetworkData() {
+      this.iid = this.$route.query.iid;
+      this.getDetail(this.iid);
+      this.getRecommendData();
+    },
     detailImageRefresh() {
       this.$refs.scroll.refresh();
       },
@@ -179,6 +182,15 @@ export default {
           }
       }
     },
+    updateDebounce(func, seconds) {
+      let timer = null;
+      return (...args) => {
+        if (timer) {clearTimeout(timer)};
+        timer = setTimeout(function() {
+          func(...args);
+        }, seconds)
+      }
+    },
     showAddShopcartText() {
       this.isAddShopcartText = true;
       setTimeout(() => {
@@ -191,13 +203,16 @@ export default {
       obj.title = this.baseGoods.title;
       obj.price = this.baseGoods.price;
       obj.quantity = 1;
-      console.log(obj);
-      this.showAddShopcartText();
+      // console.log(obj);
+      // this.showAddShopcartText();
+      this.$refs.modalTab.showModal()
+
     }
     },
   watch: {
     $route(newVal, oldVal) {
       this.refreshIndex = !this.refreshIndex;
+      this.getNetworkData();
       this.scrollIndex = 0;
     }
   },
@@ -213,6 +228,7 @@ export default {
     recommendGoods,
     scrollTop,
     addShopcartText,
+    detailModalTab,
     detailBottomBar
   }
 };

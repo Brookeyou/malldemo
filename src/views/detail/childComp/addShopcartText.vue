@@ -1,12 +1,18 @@
 <template>
   <div class="add-shopcart-text">
-    商品已加入购物车
+    {{text}}
   </div>
 </template>
 
 <script>
 export default {
   name:'',
+  props: {
+    text: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
 
@@ -31,7 +37,7 @@ export default {
   left: 0;
   right: 0;
   color: white;
-  width: 50vw;
+  width: 55vw;
   height: 5vh;
   margin: 0 auto;
   text-align: center;
@@ -40,17 +46,27 @@ export default {
   line-height: 5vh;
   font-weight: bold;
   font-size: 13px;
-  animation: ani 2s;
+  animation: ani-opacity 2s, ani-bottom 1s;
 }
 
-@keyframes ani {
+@keyframes ani-opacity {
   0% {opacity: 0;}
-  20% {opacity: 1;}
+  50% {opacity: 1;}
   100%{opacity: 0;}
 }
-@-webkit-keyframes ani {
+
+@keyframes ani-bottom {
+  0% {bottom: 53vh}
+  100% {bottom: 50vh}
+}
+
+@-webkit-keyframes ani-opacity {
   0% {opacity: 0;}
-  20% {opacity: 1;}
+  50% {opacity: 1;}
   100%{opacity: 0;}
+}
+@-webkit-keyframes ani-bottom {
+  0% {bottom: 53vh}
+  100% {bottom: 50vh}
 }
 </style>
