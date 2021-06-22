@@ -49,12 +49,8 @@ export default {
           'border-radius': '10px 10px 0 0',
           'z-index': 12,
           opacity: 1
-
-
-    }
-
-        console.log(this.modalTabHeight);
-    }, 100);
+        }
+      }, 100);
       setTimeout(() => {
         this.modalDefaultStyle = Object.assign(this.modalDefaultStyle, this.aniCssAttri)
         this.modalDefaultStyle.bottom = `${this.bottom}px`;

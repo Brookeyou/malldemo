@@ -1,5 +1,5 @@
 <template>
-  <div id="detail"  :key="refreshIndex">
+  <div id="detail"  :key="refreshIndex" @click="modalClose" ref="detail">
     <detail-navi-bar class="detail-navi-bar" @naviBarIndex="detailScrollTo"
                      :scrollCurrentIndex="scrollIndex"></detail-navi-bar>
     <scroll ref="scroll"
@@ -17,8 +17,8 @@
     <scroll-top v-show="showScrollTop" @backTop="backScroll">
       <img src="~assets/img/common/top.png" alt="">
     </scroll-top>
-    <detail-bottom-bar @addToShopcart="addToShopcart"></detail-bottom-bar>
-    <detail-modal-tab :skuInfo="skuInfo" ref="modalTab"></detail-modal-tab>
+    <detail-bottom-bar @addToShopcart="ShopcartBtn"></detail-bottom-bar>
+    <detail-modal-tab :skuInfo="skuInfo" @addToShopcart="addToShopcart" ref="modalTab"></detail-modal-tab>
     <add-shopcart-text v-show="isAddShopcartText"
                          :text="addShopcartToast">
     </add-shopcart-text>
@@ -72,7 +72,7 @@ export default {
     },
   created() {
     this.getNetworkData();
-    this.updateNetDebounce = this.updateDebounce(this.getRecommendData, 1000);
+    // this.updateNetDebounce = this.updateDebounce(this.getRecommendData, 1000);
     },
   updated() {
     // this.iid = this.$route.query.iid;
@@ -106,7 +106,6 @@ export default {
         this.itemParams = new ItemParams(res.data.result.itemParams);
         this.userComment = res.data.result.rate;
         this.skuInfo = res.data.result.skuInfo;
-        console.log(this.skuInfo);
       })
     },
 
@@ -197,16 +196,32 @@ export default {
         this.isAddShopcartText = false;
       }, 2000);
     },
-    addToShopcart() {
-      const obj = {};
+    ShopcartBtn() {
+      this.$refs.modalTab.showModal()
+    },
+    addToShopcart(currentSku) {
+      let obj = {};
       obj.image = this.swiperImages[0];
       obj.title = this.baseGoods.title;
       obj.price = this.baseGoods.price;
-      obj.quantity = 1;
-      // console.log(obj);
-      // this.showAddShopcartText();
-      this.$refs.modalTab.showModal()
-
+      obj.iid = this.$route.query.iid;
+      obj = Object.assign(obj, currentSku);
+      this.$store.commit({
+        type: 'addToShopcart',
+        obj: obj
+      })
+      this.showAddShopcartText();
+    },
+    modalClose(e) {
+      if (this.$refs.modalTab.getModalStatus() === '0px') {
+        let detailHeight = this.$refs.detail.offsetHeight;
+        let ModalHeight = this.$refs.modalTab.getModalHeight();
+        if (e.clientY <= detailHeight - ModalHeight) {
+          this.$refs.modalTab.close();
+        }
+      }else{
+        return;
+      }
     }
     },
   watch: {

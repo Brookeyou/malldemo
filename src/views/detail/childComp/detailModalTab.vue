@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="modal-btn">
-      <div class="addShopcart">
+      <div class="addShopcart" @click="addCart">
         加入购物车
       </div>
       <div class="immediately-purchase">
@@ -49,7 +49,8 @@ export default {
     return {
       currentIndex: 0,
       quantity: 0,
-      bottom: 0
+      bottom: 0,
+      currentSku: null
         };
     },
   created() {
@@ -61,6 +62,7 @@ export default {
   methods: {
     skuSelect(index) {
       this.currentIndex = index;
+      this.currentSku = this.skuInfo.skus[this.currentIndex]
     },
     increment() {
       this.quantity++;
@@ -69,10 +71,28 @@ export default {
       this.quantity--;
     },
     showModal() {
+      this.quantity = 1
       this.$refs.modalEvent.showModalTab();
     },
     close() {
       this.$refs.modalEvent.close();
+    },
+    getModalHeight() {
+      return this.$refs.modalEvent.modalTabHeight;
+    },
+    getModalStatus() {
+      return this.$refs.modalEvent.modalDefaultStyle.bottom;
+    },
+    addCart() {
+      let o = this.skuInfo.skus[this.currentIndex];
+      let obj = {
+        stockId: o.stockId,
+        style: o.style,
+        size: o.size,
+        quantity: this.quantity
+      }
+      this.$emit('addToShopcart', obj);
+      this.close();
     }
     },
   computed: {
