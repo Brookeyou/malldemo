@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    shopcartGoods: []
+    shopcartGoods: [],
+    shopcartGoodsTotalPrice: 0
   },
   mutations: {
     addToShopcart(state, payload) {
@@ -35,9 +36,15 @@ const store = new Vuex.Store({
       this.commit('oneGoodsTotal');
     },
     oneGoodsTotal(state) {
+      state.shopcartGoodsTotalPrice = 0;
       for (let item of state.shopcartGoods) {
         item.goodsTotal = (item.price * item.quantity).toFixed(2);
+        state.shopcartGoodsTotalPrice += Number(item.goodsTotal);
       }
+    },
+    deleteShopcartGoods(state, index) {
+      state.shopcartGoods.splice(index, 1);
+      this.commit('oneGoodsTotal');
     }
   }
 })

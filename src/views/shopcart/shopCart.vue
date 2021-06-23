@@ -4,106 +4,10 @@
     <scroll ref="scroll">
       <div>
         <shopcart-goods-list ref="shopcartGoodsList"></shopcart-goods-list>
-        <!-- <ul>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-        </ul> -->
+        <div class="stand"></div>
       </div>
     </scroll>
+    <settlement-bar></settlement-bar>
   </div>
 </template>
 
@@ -111,6 +15,7 @@
 import shopcartNavi from 'views/shopcart/childComp/shopcartNavi';
 import scroll from 'components/common/scroll/scroll'
 import shopcartGoodsList from 'views/shopcart/childComp/shopcartGoodsList';
+import settlementBar from 'views/shopcart/childComp/settlementBar'
 export default {
   name:'shopCart',
   data() {
@@ -134,7 +39,8 @@ export default {
   components: {
     shopcartNavi,
     scroll,
-    shopcartGoodsList
+    shopcartGoodsList,
+    settlementBar
   }
 };
 </script>
@@ -152,5 +58,7 @@ export default {
   right: 0;
   z-index: 6;
 }
-
+.stand {
+  height: 60px;
+}
 </style>

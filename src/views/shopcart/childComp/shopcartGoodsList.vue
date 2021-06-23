@@ -45,7 +45,7 @@
           <div class="collect">
             加入收藏夹
           </div>
-          <div class="delete">
+          <div class="delete" @click="deleteGoods(index)">
             删除
           </div>
         </div>
@@ -66,7 +66,6 @@ export default {
       distance: 0,
       offsetWidth: 0,
       banner: [],
-      swiperBox: [],
       lastTimeIndex: null
         };
     },
@@ -92,26 +91,28 @@ export default {
     decrement(index) {
       this.$store.commit('quantityDecrement', index);
     },
+    deleteGoods(index) {
+      this.checkLastTimeScroll(true);
+      this.$store.commit('deleteShopcartGoods', index);
+    },
     redirectDetail(iid) {
       this.$router.push({name: 'detail', query: {iid: iid}})
     },
     handlerDom() {
       this.banner = document.getElementsByClassName('banner');
-      this.swiperBox = document.getElementsByClassName('swiper-box');
+
       if (this.banner.length !== 0) {
-          this.offsetWidth = this.swiperBox[0].offsetWidth;
-        //   for (let i = 0; i < this.banner.length; i++) {
-        //     this.banner[i].style.width = `${this.offsetWidth * 1.5}px`
-        //     console.log(this.offsetWidth)
-        //     console.log(this.banner[i].scrollWidth)
-        // }
+          this.offsetWidth = this.banner[0].offsetWidth;
       }
 
     },
     setTransform(banner, position) {
-      banner.style.transform = `translate3d(${position}px, 0, 0)`;
-      banner.style['-webkit-transform'] = `translate3d(${position}px, 0, 0)`;
-      banner.style['-ms-transform'] = `translate3d(${position}px, 0, 0)`;
+      // banner.style.transform = `translate3d(0, 0, 0)`;
+      // banner.style['-webkit-transform'] = `translate3d(0, 0, 0)`;
+      // banner.style['-ms-transform'] = `translate3d(0, 0, 0)`;
+      banner.style.transform = `translate(${position}px)`;
+      banner.style['-webkit-transform'] = `translate(${position}px)`;
+      banner.style['-ms-transform'] = `translate(${position}px)`;
     },
     scrollContent(banner, position) {
       banner.style.transition =`transform 500ms`;
@@ -139,8 +140,9 @@ export default {
     touchMove(e, index) {
       this.currentX = e.touches[0].pageX;
       this.distance = this.currentX - this.touchStartX;
-      let translatesX = parseFloat(this.banner[index].style.transform.substring(12).split(',')[0])
-      if (translatesX >= 0 && this.distance < 0) {
+      // let translatesX = parseFloat(this.banner[index].style.transform.substring(12).split(',')[0]);
+      let translatesX = parseFloat(this.banner[index].style.transform.substring(9).match(/-\d+/));
+      if (this.distance < 0) {
         this.setTransform(this.banner[index], this.distance);
       }else if (translatesX < 0) {
         this.setTransform(this.banner[index], this.distance);
@@ -152,13 +154,14 @@ export default {
         this.lastTimeIndex = index;
         this.scrollContent(this.banner[index], -this.offsetWidth / 2);
       }else if (this.distance >= 0 && this.distance > 100) {
-        let translatesX = parseFloat(this.banner[index].style.transform.substring(12).split(',')[0])
-        if (translatesX === -this.offsetWidth / 2) {
+        // let translatesX = parseFloat(this.banner[index].style.transform.substring(12).split(',')[0]);
+        let translatesX = parseFloat(this.banner[index].style.transform.substring(9).match(/-\d+/));
+        if (translatesX === parseInt(-this.offsetWidth / 2)) {
           this.lastTimeIndex = null;
-          this.scrollContent(this.banner[index], 0);
         }
-      }else{
         this.scrollContent(this.banner[index], 0);
+      }else{
+          this.scrollContent(this.banner[index], 0);
       }
     }
     }
@@ -172,21 +175,22 @@ export default {
 
 }
 .banner {
-  width: 150vw;
+  /* width: 150vw; */
   display: flex;
+  flex-shrink: 0;
 
 }
 .goods-item {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   border-bottom: 1px solid #eee;
-  margin: 5px;
-  padding-bottom: 5px;
+  margin: 5px 0 5px 0;
+  padding: 0 5px 10px 5px;
   width: 100vw;
 }
 .goods-image {
-  width: 70px;
-  height: 70px;
+  width: 25vw;
+  height: 20vw;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -194,7 +198,7 @@ export default {
   width: 100%;
 }
 .goods-info {
-  width: 245px;
+  width: 75vw;
   margin-left: 5px;
 }
 .goods-info div {
@@ -273,8 +277,9 @@ export default {
   font-size: 10px;
   font-weight: bold;
   text-align: center;
-  line-height: 80px;
+  line-height: calc((1 / 7) * 100vh);
   padding: 0 0 5px 0;
+  flex-shrink: 0;
 }
 .operation .collect {
   flex: 1;

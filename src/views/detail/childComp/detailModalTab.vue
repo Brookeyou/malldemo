@@ -161,7 +161,7 @@ export default {
   width: 35vw;
   padding: 5px;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
 }
 .modal-btn .addShopcart {
   background-color: #ffe817;

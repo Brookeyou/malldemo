@@ -216,7 +216,7 @@ export default {
       if (this.$refs.modalTab.getModalStatus() === '0px') {
         let detailHeight = this.$refs.detail.offsetHeight;
         let ModalHeight = this.$refs.modalTab.getModalHeight();
-        if (e.clientY <= detailHeight - ModalHeight) {
+        if (e.clientY <= detailHeight - ModalHeight - 50) {
           this.$refs.modalTab.close();
         }
       }else{
