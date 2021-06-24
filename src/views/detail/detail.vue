@@ -43,6 +43,7 @@ import detailModalTab from 'views/detail/childComp/detailModalTab';
 import {imageLoadListener} from 'common/mixin';
 import {detailData, recommendData, BaseGoodsInfo, ShopInfo, ItemParams} from 'network/detail';
 import {BACKTOP_DISTANCE} from 'common/const';
+import {mapActions} from 'vuex';
 
 export default {
   name:'detail',
@@ -66,7 +67,7 @@ export default {
       scrollIndex: 0,
       refreshIndex: false,
       isAddShopcartText: false,
-      addShopcartToast: '商品已加入购物车',
+      addShopcartToast: '',
       updateNetDebounce: null
         };
     },
@@ -93,6 +94,9 @@ export default {
     this.getOffsetTop();
     },
   methods: {
+    ...mapActions([
+      'addShopcart'
+    ]),
     getDetail (iid) {
       detailData (iid).then((res) => {
         this.swiperImages = res.data.result.itemInfo.topImages;
@@ -190,7 +194,8 @@ export default {
         }, seconds)
       }
     },
-    showAddShopcartText() {
+    showAddShopcartText(text) {
+      this.addShopcartToast = text
       this.isAddShopcartText = true;
       setTimeout(() => {
         this.isAddShopcartText = false;
@@ -205,12 +210,18 @@ export default {
       obj.title = this.baseGoods.title;
       obj.price = this.baseGoods.price;
       obj.iid = this.$route.query.iid;
+      obj.checked = true;
       obj = Object.assign(obj, currentSku);
-      this.$store.commit({
-        type: 'addToShopcart',
-        obj: obj
+      // this.$store.commit({
+      //   type: 'addToShopcart',
+      //   obj: obj
+      // })
+      // this.$store.dispatch('addShopcart', obj).then(res => {
+      //   this.showAddShopcartText(res);
+      // })
+      this.addShopcart(obj).then(res => {
+        this.showAddShopcartText(res);
       })
-      this.showAddShopcartText();
     },
     modalClose(e) {
       if (this.$refs.modalTab.getModalStatus() === '0px') {

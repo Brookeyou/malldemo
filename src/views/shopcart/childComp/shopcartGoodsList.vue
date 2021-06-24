@@ -1,9 +1,13 @@
 <template>
   <div class="shopcart-goods-list">
-    <div class="swiper-box" v-for="(item, index) in $store.state.shopcartGoods" :key="index"
-                          @touchstart="touchStart($event, index)" @touchmove="touchMove($event, index)" @touchend="touchEnd($event, index)">
+    <div class="swiper-box" v-for="(item, index) in $store.state.shopcartGoods"
+                          :key="index"
+                          @touchstart="touchStart($event, index)"
+                          @touchmove="touchMove($event, index)"
+                          @touchend="touchEnd($event, index)">
       <div class="banner" ref="banner">
         <div class="goods-item">
+          <select-btn :isChecked="item.checked" @click.native="oneGoodsClick(index)"></select-btn>
           <div class="goods-image">
             <img :src="item.image" alt="" @click="redirectDetail(item.iid)">
           </div>
@@ -55,6 +59,8 @@
 </template>
 
 <script>
+import selectBtn from 'components/common/selectbtn/selectBtn';
+import {mapState} from 'vuex';
 export default {
   name:'shopcartGoodsList',
   data() {
@@ -134,6 +140,10 @@ export default {
         this.backOff(this.banner[this.lastTimeIndex]);
       }
     },
+    oneGoodsClick(index) {
+      this.shopcartGoods[index].checked = !this.shopcartGoods[index].checked;
+      this.$store.commit('oneGoodsTotal');
+    },
     touchStart(e, index) {
       this.touchStartX = e.touches[0].pageX;
     },
@@ -164,6 +174,14 @@ export default {
           this.scrollContent(this.banner[index], 0);
       }
     }
+    },
+    computed: {
+      ...mapState([
+        'shopcartGoods',
+      ])
+    },
+    components: {
+      selectBtn
     }
 };
 </script>
@@ -189,7 +207,7 @@ export default {
   width: 100vw;
 }
 .goods-image {
-  width: 25vw;
+  width: 20vw;
   height: 20vw;
   border-radius: 5px;
   overflow: hidden;
@@ -198,7 +216,7 @@ export default {
   width: 100%;
 }
 .goods-info {
-  width: 75vw;
+  width: 70vw;
   margin-left: 5px;
 }
 .goods-info div {
@@ -229,6 +247,7 @@ export default {
   padding-top: 2px;
   color: var(--color-high-text);
   font-size: 15px;
+  font-weight: bold;
 }
 .goods-price-info .price .sign {
   display: inline-block;
