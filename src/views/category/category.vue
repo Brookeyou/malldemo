@@ -1,166 +1,98 @@
 <template>
-<div id="category">
-  <div class="wrapper">
-    <ul id="second">
-      <li>分类1</li>
-      <li>分类2</li>
-      <li>分类3</li>
-      <li>分类4</li>
-      <li>分类5</li>
-      <li>分类6</li>
-      <li>分类7</li>
-      <li>分类8</li>
-      <li>分类9</li>
-      <li>分类10</li>
-      <li>分类11</li>
-      <li>分类12</li>
-      <li>分类13</li>
-      <li>分类14</li>
-      <li>分类15</li>
-      <li>分类16</li>
-      <li>分类17</li>
-      <li>分类18</li>
-      <li>分类19</li>
-      <li>分类20</li>
-      <li>分类21</li>
-      <li>分类22</li>
-      <li>分类23</li>
-      <li>分类24</li>
-      <li>分类25</li>
-      <li>分类26</li>
-      <li>分类27</li>
-      <li>分类28</li>
-      <li>分类29</li>
-      <li>分类30</li>
-      <li>分类31</li>
-      <li>分类32</li>
-      <li>分类33</li>
-      <li>分类34</li>
-      <li>分类35</li>
-      <li>分类36</li>
-      <li>分类37</li>
-      <li>分类38</li>
-      <li>分类39</li>
-      <li>分类40</li>
-      <li>分类41</li>
-      <li>分类42</li>
-      <li>分类43</li>
-      <li>分类44</li>
-      <li>分类45</li>
-      <li>分类46</li>
-      <li>分类47</li>
-      <li>分类48</li>
-      <li>分类49</li>
-      <li>分类50</li>
-      <li>分类51</li>
-      <li>分类52</li>
-      <li>分类53</li>
-      <li>分类54</li>
-      <li>分类55</li>
-      <li>分类56</li>
-      <li>分类57</li>
-      <li>分类58</li>
-      <li>分类59</li>
-      <li>分类60</li>
-      <li>分类61</li>
-      <li>分类62</li>
-      <li>分类63</li>
-      <li>分类64</li>
-      <li>分类65</li>
-      <li>分类66</li>
-      <li>分类67</li>
-      <li>分类68</li>
-      <li>分类69</li>
-      <li>分类70</li>
-      <li>分类71</li>
-      <li>分类72</li>
-      <li>分类73</li>
-      <li>分类74</li>
-      <li>分类75</li>
-      <li>分类76</li>
-      <li>分类77</li>
-      <li>分类78</li>
-      <li>分类79</li>
-      <li>分类80</li>
-      <li>分类81</li>
-      <li>分类82</li>
-      <li>分类83</li>
-      <li>分类84</li>
-      <li>分类85</li>
-      <li>分类86</li>
-      <li>分类87</li>
-      <li>分类88</li>
-      <li>分类89</li>
-      <li>分类90</li>
-      <li>分类91</li>
-      <li>分类92</li>
-      <li>分类93</li>
-      <li>分类94</li>
-      <li>分类95</li>
-      <li>分类96</li>
-      <li>分类97</li>
-      <li>分类98</li>
-      <li>分类99</li>
-      <li>分类100</li>
-    </ul>
+  <div class="category">
+    <category-navi></category-navi>
+    <div class="category-area">
+      <div class="cate">
+        <scroll id="main-category">
+          <div>
+            <category-list :category="category" @categoryClick="changeSubCate"></category-list>
+          </div>
+        </scroll>
+      </div>
+      <div class="sub-category">
+        <sub-category-list :subCateList="currentSubCategory.list"></sub-category-list>
+      </div>
+    </div>
   </div>
-</div>
-
 </template>
-
 <script>
-import Bscroll from 'better-scroll';
+import categoryNavi from 'views/category/childComp/categoryNavi';
+import categoryList from 'views/category/childComp/categoryList';
+import subCategoryList from 'views/category/childComp/subCategoryList';
+import scroll from 'components/common/scroll/scroll';
+import {category, subCategory} from 'network/category';
 
 export default {
   name:'category',
   data() {
     return {
-      scroll: null,
-        };
+      category: [],
+      currentSubCategory: {},
+      currentCategoryIndex: 0
+        }
     },
   created() {
-
+    this.getFirstCate();
     },
   updated () {
 
   },
   activated() {
-    // console.log(document.getElementsByTagName('body')[0].scrollHeight);
+
   },
   mounted() {
-    // this.getOffset();
-    let wrapper = document.querySelector('.wrapper');
-    this.scroll = new Bscroll(wrapper);
+
     },
   methods: {
-    getOffset () {
-      let ul = document.getElementById('second');
-      let div = document.getElementsByClassName('wrapper')[0];
-      div.scrollTop = 100;
-      console.log(ul.offsetTop);
-      }
+    getCategory() {
+      return category().then(res => {
+        this.category.push(...res.data.data.category.list)
+      })
+    },
+    getSubCategory(maitKey) {
+      subCategory(maitKey).then(res => {
+        this.currentSubCategory = res.data.data
+      })
+    },
+    getFirstCate() {
+      this.getCategory().then(res => {
+        this.getSubCategory(this.category[this.currentCategoryIndex].maitKey);
+      })
+    },
+    changeSubCate(index) {
+      this.currentCategoryIndex = index;
+      this.getSubCategory(this.category[this.currentCategoryIndex].maitKey);
     }
+    },
+  components: {
+    scroll,
+    categoryNavi,
+    categoryList,
+    subCategoryList
+  }
 };
 </script>
 
 <style scoped>
-#category {
-  /* position: relative; */
-  height: 100vh;
+.category-area {
+  padding: 10px 0;
+  display: flex;
+  padding-top: 44px;
+  background-color: #eee;
 }
-.wrapper {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  right: 0;
-  bottom: 0px;
-  /* height: 50vh; */
-  background-color: chocolate;
-  /* height: calc(100% - 50px);
-  margin-top: 50px; */
-  /* overflow: scroll; */
-  /* overflow: hidden;
-  overflow-y: scroll; */
+.cate {
+  width: 26vw;
+}
+.cate .wrapper {
+  width: 26vw;
+  top: 54px;
+  padding-top: 5px;
+  z-index: -1;
+}
+.sub-category {
+  /* position: relative; */
+  width: 74vw;
+
 }
 
 </style>

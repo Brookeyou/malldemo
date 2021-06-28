@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" ref="wrapper">
     <slot></slot>
   </div>
 </template>
@@ -35,8 +35,8 @@ export default {
     },
   methods: {
     _initScroll () {
-      let wrapper = document.querySelector('.wrapper');
-      this.scroll = new bScroll(wrapper, {
+      // let wrapper = document.querySelector('.wrapper');
+      this.scroll = new bScroll(this.$refs.wrapper, {
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
       click: true
