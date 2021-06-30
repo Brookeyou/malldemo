@@ -133,11 +133,13 @@ export default {
         return;
       }else if(flag){
         this.backOff(this.banner[this.lastTimeIndex]);
+        this.lastTimeIndex = null;
         return;
       }else if(!flag && this.lastTimeIndex === index){
         return;
       }else {
         this.backOff(this.banner[this.lastTimeIndex]);
+        this.lastTimeIndex = null;
       }
     },
     oneGoodsClick(index) {

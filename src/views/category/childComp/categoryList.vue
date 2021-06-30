@@ -21,6 +21,10 @@ export default {
       default() {
         return [];
       },
+    },
+    currentCate: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -29,10 +33,8 @@ export default {
         };
     },
   created() {
-
     },
   mounted() {
-
     },
   methods: {
     categoryClick(index) {
@@ -57,6 +59,11 @@ export default {
       }
     }
   },
+  watch: {
+    currentCate(newVal, oldVal){
+      this.currentIndex = newVal;
+    }
+  },
   components: {
     categoryBox,
     categoryItem
@@ -67,12 +74,13 @@ export default {
 <style scoped>
 .category-list {
   width: 26vw;
-  background-color: #eee;
+  /* background-color: #eee; */
 }
 .active {
   background-color: white;
   border-radius: 10px 0 0 10px;
   margin-left: 1vw;
+  border-left: 2px solid #eee;
 }
 .active-previous {
   border-radius: 0 0 10px 0;

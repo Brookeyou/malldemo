@@ -57,7 +57,6 @@ export default {
       // getBoundingClientRact 获取精确的width 此方法返回定位值 长宽
       let itemWidth = (grid.getBoundingClientRect().width - this.hMargin * 2 - (this.cols - 1) * this.itemSpace) / this.cols;
 
-      console.log(grid.getBoundingClientRect())
       for (let i=0; i<children.length; i++) {
         let child = children[i];
         child.style.width = itemWidth + 'px';

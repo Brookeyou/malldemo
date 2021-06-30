@@ -54,11 +54,13 @@ const store = new Vuex.Store({
     },
     addNewGoods(state, obj) {
       state.shopcartGoods.push(obj);
+      this.commit('oneGoodsTotal');
     },
     oldGoodsIncrease(state, payload){
       for (let item of state.shopcartGoods) {
         if (item.stockId === payload.obj.stockId) {
           item.quantity += payload.obj.quantity;
+          this.commit('oneGoodsTotal');
           break;
         }
       }

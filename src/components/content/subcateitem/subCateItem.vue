@@ -1,6 +1,6 @@
 <template>
   <div class="sub-category-item">
-    <img :src="item.image" alt="">
+    <img :src="item.image" alt="" @load="imageLoad">
     <div class="title">
       {{item.title}}
     </div>
@@ -30,7 +30,10 @@ export default {
 
     },
   methods: {
-
+    imageLoad () {
+      // 事件总线 需要在main vue prototype new vue
+      this.$bus.$emit('imageLoad');
+    }
     }
 };
 </script>

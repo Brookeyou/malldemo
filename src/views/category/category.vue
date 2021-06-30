@@ -3,14 +3,19 @@
     <category-navi></category-navi>
     <div class="category-area">
       <div class="cate">
-        <scroll id="main-category">
+        <scroll id="main-category" :bounce="scrollBounce">
           <div>
-            <category-list :category="category" @categoryClick="changeSubCate"></category-list>
+            <category-list :category="category" @categoryClick="changeSubCate"
+                                                :currentCate="currentCategoryIndex">
+            </category-list>
           </div>
         </scroll>
       </div>
       <div class="sub-category">
-        <sub-category-list :subCateList="currentSubCategory.list"></sub-category-list>
+        <sub-category-list :subCateList="currentSubCategory.list"
+                            @pullUp="changeNextCate"
+                            ref="subCategoryList">
+        </sub-category-list>
       </div>
     </div>
   </div>
@@ -20,6 +25,7 @@ import categoryNavi from 'views/category/childComp/categoryNavi';
 import categoryList from 'views/category/childComp/categoryList';
 import subCategoryList from 'views/category/childComp/subCategoryList';
 import scroll from 'components/common/scroll/scroll';
+
 import {category, subCategory} from 'network/category';
 
 export default {
@@ -28,7 +34,13 @@ export default {
     return {
       category: [],
       currentSubCategory: {},
-      currentCategoryIndex: 0
+      currentCategoryIndex: 0,
+      scrollBounce: {
+            top: false,
+            bottom: false,
+            left: false,
+            right: false
+      }
         }
     },
   created() {
@@ -38,6 +50,9 @@ export default {
 
   },
   activated() {
+
+  },
+  deactivated() {
 
   },
   mounted() {
@@ -50,7 +65,7 @@ export default {
       })
     },
     getSubCategory(maitKey) {
-      subCategory(maitKey).then(res => {
+      return subCategory(maitKey).then(res => {
         this.currentSubCategory = res.data.data
       })
     },
@@ -62,6 +77,15 @@ export default {
     changeSubCate(index) {
       this.currentCategoryIndex = index;
       this.getSubCategory(this.category[this.currentCategoryIndex].maitKey);
+    },
+    changeNextCate() {
+      if (this.currentCategoryIndex < this.category.length - 1) {
+        this.currentCategoryIndex++;
+        this.getSubCategory(this.category[this.currentCategoryIndex].maitKey).then(res => {
+          this.$refs.subCategoryList.finishPullUp();
+        })
+      }
+      this.$refs.subCategoryList.finishPullUp();
     }
     },
   components: {
